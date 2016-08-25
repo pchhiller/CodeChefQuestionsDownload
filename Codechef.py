@@ -4,6 +4,18 @@ from bs4 import BeautifulSoup
 import urllib2
 import mechanize
 import os
+list1=[]
+for file in os.listdir("./"):
+    list1.append(file)
+def partmatch(name):
+
+    for i in range(0,len(list1)):
+        if(name in list1[i]):
+            return i
+    return 0
+
+
+
 
 options = {
     'page-size': 'Letter',
@@ -14,6 +26,7 @@ options = {
     'encoding': "UTF-8",
     'no-outline': None
 }
+
 response = urllib2.urlopen('https://www.codechef.com/problems/school')
 data =response.read()
 start="https://www.codechef.com"
@@ -24,10 +37,17 @@ for link in soup.find_all('tr', class_="problemrow"):
     Url= start+end
     SuccesfulSolutions= link.find('div',style="text-align:center;").string
     PdfName=SuccesfulSolutions+" "+Name+'.pdf'
-    if (os.path.isfile('./'+PdfName)):
+    print Name
+    if (PdfName in list1):
         print "Skipping" +PdfName+" , because file already exists"
         continue
-    print Url
+    elif (partmatch(Name)!=0):
+        ind=partmatch(Name)
+        os.rename(list1[ind],PdfName)
+        print "Renaming..."
+        continue
+
+
     br = mechanize.Browser()
     br.set_handle_robots(False)
     response=br.open(Url)
