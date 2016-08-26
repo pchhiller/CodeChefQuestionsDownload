@@ -6,7 +6,9 @@ import mechanize
 import os
 list1=[]
 list2=[]
-difficulty= 'easy'
+difficulty= 'school'
+if not os.path.exists(difficulty):
+    os.makedirs(difficulty)
 for file in os.listdir("./"+difficulty+"/"):
     list1.append(file)
 for item in list1:
@@ -33,8 +35,7 @@ options = {
 }
 
 response = urllib2.urlopen('https://www.codechef.com/problems/'+difficulty)
-if not os.path.exists(difficulty):
-    os.makedirs(difficulty)
+
 data =response.read()
 start="https://www.codechef.com"
 soup = BeautifulSoup(data)
