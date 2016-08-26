@@ -51,7 +51,7 @@ for link in soup.find_all('tr', class_="problemrow"):
         continue
     elif (partmatch(Name)!=0):
         ind=partmatch(Name)
-        os.rename(list1[ind],PdfName)
+        os.rename("./"+difficulty+"/"+list1[ind],PdfName)
         print "Renaming..."
         continue
 
