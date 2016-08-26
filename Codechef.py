@@ -5,12 +5,16 @@ import urllib2
 import mechanize
 import os
 list1=[]
-for file in os.listdir("./"):
+list2=[]
+difficulty= 'easy'
+for file in os.listdir("./"+difficulty+"/"):
     list1.append(file)
+for item in list1:
+    index = item.index(' ')
+    list2.append(item[index+1:-4])
 def partmatch(name):
-
-    for i in range(0,len(list1)):
-        if(name in list1[i]):
+    for i in range(0,len(list2)):
+        if list2[i]==name:
             return i
     return 0
 
@@ -18,6 +22,7 @@ def partmatch(name):
 
 
 options = {
+    'quiet': '',
     'page-size': 'Letter',
     'margin-top': '0.75in',
     'margin-right': '0.75in',
@@ -27,7 +32,9 @@ options = {
     'no-outline': None
 }
 
-response = urllib2.urlopen('https://www.codechef.com/problems/school')
+response = urllib2.urlopen('https://www.codechef.com/problems/'+difficulty)
+if not os.path.exists(difficulty):
+    os.makedirs(difficulty)
 data =response.read()
 start="https://www.codechef.com"
 soup = BeautifulSoup(data)
@@ -64,6 +71,8 @@ for link in soup.find_all('tr', class_="problemrow"):
             data1= str(data1)
             html=data1.decode('utf-8')
             pdfkit.from_string(html,PdfName,options=options)
+            os.rename(PdfName, "./"+difficulty+"/"+PdfName)
+
         i=i+1
 
 
