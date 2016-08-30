@@ -33,14 +33,18 @@ options = {
     'encoding': "UTF-8",
     'no-outline': None
 }
-
+Editorial = "http://discuss.codechef.com/problems/"
 response = urllib2.urlopen('https://www.codechef.com/problems/'+difficulty)
 
 data =response.read()
 start="https://www.codechef.com"
+j=0
 soup = BeautifulSoup(data)
 for link in soup.find_all('tr', class_="problemrow"):
+    j=j+1
     Name=link.b.string
+    Code= Name[9:]
+    print Code
     end=link.a.get('href')
     Url= start+end
     SuccesfulSolutions= link.find('div',style="text-align:center;").string
@@ -51,7 +55,7 @@ for link in soup.find_all('tr', class_="problemrow"):
         continue
     elif (partmatch(Name)!=0):
         ind=partmatch(Name)
-        os.rename("./"+difficulty+"/"+list1[ind],PdfName)
+        os.rename("./"+difficulty+"/"+list1[ind],"./"+difficulty+"/"+PdfName)
         print "Renaming..."
         continue
 
@@ -76,6 +80,6 @@ for link in soup.find_all('tr', class_="problemrow"):
 
         i=i+1
 
-
+print j
 
 
