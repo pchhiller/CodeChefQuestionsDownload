@@ -1,14 +1,16 @@
 # -*- coding: UTF-8 -*-
-import pdfkit
-from bs4 import BeautifulSoup
-import urllib2
-import mechanize
-import os
+import pdfkit #used for creating pdf
+from bs4 import BeautifulSoup #the scrape data from Code Chef
+import urllib2 # to get and post requestd using url
+import mechanize # your backend browser
+import os # for arranging into folders and renaming files
 list1=[]
 list2=[]
-difficulty= 'school'
+difficulty= 'school' # enter your prefered level in place of school
+
+# making the folder for specified difficulty
 if not os.path.exists(difficulty):
-    os.makedirs(difficulty)
+    os.makedirs(difficulty) 
 for file in os.listdir("./"+difficulty+"/"):
     list1.append(file)
 for item in list1:
@@ -22,7 +24,7 @@ def partmatch(name):
 
 
 
-
+#adjust your page display settings here
 options = {
     'quiet': '',
     'page-size': 'Letter',
@@ -40,6 +42,8 @@ data =response.read()
 start="https://www.codechef.com"
 j=0
 soup = BeautifulSoup(data)
+
+# Gets question code
 for link in soup.find_all('tr', class_="problemrow"):
     j=j+1
     Name=link.b.string
@@ -48,7 +52,7 @@ for link in soup.find_all('tr', class_="problemrow"):
     end=link.a.get('href')
     Url= start+end
     SuccesfulSolutions= link.find('div',style="text-align:center;").string
-    PdfName=SuccesfulSolutions+" "+Name+'.pdf'
+    PdfName=SuccesfulSolutions+" "+Name+'.pdf' # level by no. of solutions
     print Name
     if (PdfName in list1):
         print "Skipping" +PdfName+" , because file already exists"
@@ -59,7 +63,7 @@ for link in soup.find_all('tr', class_="problemrow"):
         print "Renaming..."
         continue
 
-
+#opening and saving questions.
     br = mechanize.Browser()
     br.set_handle_robots(False)
     response=br.open(Url)
