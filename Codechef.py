@@ -4,14 +4,14 @@ from bs4 import BeautifulSoup #the scrape data from Code Chef
 import urllib2 # to get and post requestd using url
 import mechanize # your backend browser
 import os # for arranging into folders and renaming files
-list1=[]
+list1=[] # Creating an empty list
 list2=[]
 difficulty= 'school' # enter your prefered level in place of school
 
 # making the folder for specified difficulty
 if not os.path.exists(difficulty):
     os.makedirs(difficulty) 
-for file in os.listdir("./"+difficulty+"/"):
+for file in os.listdir("./"+difficulty+"/"): # For loop
     list1.append(file)
 for item in list1:
     index = item.index(' ')
