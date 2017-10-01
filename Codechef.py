@@ -73,9 +73,6 @@ for link in soup.find_all('tr', class_="problemrow"):
     html=""
     for data1 in soup.find_all('div',class_="content"):
         if i==2:
-            #for child in data1.descendants:
-                #html=html +child.encode('utf-8')
-            #print data1
             print "Converting to pdf " + PdfName
             data1= str(data1)
             html=data1.decode('utf-8')
