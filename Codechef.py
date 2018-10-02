@@ -1,14 +1,17 @@
+# TMW
 # -*- coding: UTF-8 -*-
 import pdfkit  # used for creating pdf
 from bs4 import BeautifulSoup  # the scrape data from Code Chef
 import urllib2  # to get and post requestd using url
 import mechanize  # your backend browser
 import os  # for arranging into folders and renaming files
+
 list1 = []  # Creating an empty list
 list2 = []
 difficulty = raw_input("Chose Difficulty Level (School, Easy, Medium, Hard, Challenge) : ")  # enter your prefered level in place of school
 print('Fetching data ... \n')
 difficulty = difficulty.lower()
+
 
 # making the folder for specified difficulty
 if not os.path.exists(difficulty):
@@ -44,6 +47,7 @@ response = urllib2.urlopen('https://www.codechef.com/problems/' + difficulty)
 data = response.read()
 start = "https://www.codechef.com"
 j = 0
+
 soup = BeautifulSoup(data, "lxml")
 
 # Gets question code
@@ -75,6 +79,7 @@ for link in soup.find_all('tr', class_="problemrow"):
     response = br.open(Url)
     i = 1
     data = response.read()
+
     soup = BeautifulSoup(data, "lxml")
     html = ""
     for data1 in soup.find_all('div', class_="content"):
